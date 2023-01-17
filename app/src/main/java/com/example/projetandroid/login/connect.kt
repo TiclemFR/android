@@ -10,11 +10,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.projetandroid.*
 import com.example.projetandroid.ui.theme.*
 
 @Composable
-fun connectPage(){
+fun connectPage(navController: NavController){
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = GrayBG
@@ -85,7 +86,7 @@ fun connectPage(){
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Bottom
         ) {
-            textButton()
+            textButton(navController)
         }
     }
 }
@@ -135,8 +136,8 @@ fun connect(){
 }
 
 @Composable
-fun textButton(){
-    Row(modifier = Modifier.clickable {  }){
+fun textButton(navController: NavController){
+    Row(modifier = Modifier.clickable { navController.navigate("login") }){
         Text("Déjà un compte ? ", color = Color(0xFF747685), fontSize = 12.sp, fontFamily = Inter)
         Text("Connecte-toi !", color = Color(0xFF5F67EA), fontSize = 12.sp, fontFamily = Inter)
     }

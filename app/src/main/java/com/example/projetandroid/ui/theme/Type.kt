@@ -15,19 +15,20 @@ val Typography = Typography(
     body1 = TextStyle(
         fontFamily = Inter,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 12.sp
     ),
     h1 = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = InterCF,
         fontWeight = FontWeight.Bold,
-        fontSize = 30.sp
+        fontSize = 26.sp
     ),
     h2 = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = Inter,
         fontWeight = FontWeight.Normal,
-        fontSize = 20.sp
+        fontSize = 18.sp
     ),
     body2 = TextStyle(
-        fontFamily = InterCF
+        fontFamily = InterCF,
+        fontSize = 16.sp
     )
 )

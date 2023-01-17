@@ -17,17 +17,12 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.projetandroid.ui.theme.Typography
 import com.example.projetandroid.ui.theme.*
 
 @Composable
-@Preview
-fun loginPage(){
-
-    val configuration = LocalConfiguration.current
-
-    val screenHeight = configuration.screenHeightDp.dp
-    val screenWidth = configuration.screenWidthDp.dp
+fun loginPage(navController: NavController){
 
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -35,9 +30,9 @@ fun loginPage(){
         modifier = Modifier
             .fillMaxHeight()
             .background(BackgroundColor)
-            .padding(top = 20.dp)) {
+            .padding(top = 80.dp)) {
         Row(horizontalArrangement = Arrangement.Center) {
-            Text(text = "Te revoilà ! 🔥",
+            Text(text = "Te revoila 🔥",
                 color = Color.Black,
                 style = Typography.h1,
                 textAlign = TextAlign.Center
@@ -45,7 +40,7 @@ fun loginPage(){
         }
         Row(horizontalArrangement = Arrangement.Center,
             modifier = Modifier
-                .padding(top = 15.dp)) {
+                .padding(top = 13.dp)) {
             Text(text = "Reviens vite pour profiter \n des bons plans",
                 color = Color.Black,
                 style = Typography.h2,
@@ -55,51 +50,53 @@ fun loginPage(){
         //INPUTS
 
         Row(modifier = Modifier
-            .padding(top = 25.dp)) {
+            .padding(top = 45.dp)) {
             Input(value = login, placeholder = "Ton adresse e-mail", onValueChange = {newText -> login = newText})
         }
         Row(modifier = Modifier
-            .padding(top = 25.dp)) {
+            .padding(top = 17.dp)) {
             Input(value = password, placeholder = "Ton mot de passe",
                 onValueChange = {newText -> password = newText}, true)
         }
         //Forgot password
         Row(modifier = Modifier
-            .padding(top = 25.dp, end = 10.dp)
+            .padding(top = 22.dp, end = 10.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.End) {
             Text(text = "Mot de passe oublié ?",
                 color = TinyText,
                 textAlign = TextAlign.End,
+                style = Typography.body1,
             modifier = Modifier.clickable {  })
         }
         //Button connect
         Row(modifier = Modifier
-            .padding(top = 25.dp)) {
+            .padding(top = 43.dp)) {
             Button(onClick = {
                 //your onclick code
             },
                 colors = ButtonDefaults.buttonColors(backgroundColor = ButtonColor),
                 shape = RoundedCornerShape(20),
                 modifier = Modifier
-                    .width(250.dp)
-                    .height(50.dp)
+                    .width(327.dp)
+                    .height(56.dp)
             )
 
             {
-                Text(text = "SE CONNECTER",color = Color.White)
+                Text(text = "SE CONNECTER",color = Color.White, style = Typography.body2)
             }
         }
         //Sing in
         Row(verticalAlignment = Alignment.Bottom,
         modifier = Modifier
             .fillMaxHeight()
-            .padding(bottom = 20.dp)){
-            Text(text = "Pas encore inscrit ? ")
+            .padding(bottom = 37.dp)){
+            Text(text = "Pas encore inscrit ? ", style = Typography.body1, color = TinyText)
             Text(
                 text = "Aller viens !",
                 color = ClickableText,
-                modifier = Modifier.clickable {  })
+                style = Typography.body1,
+                modifier = Modifier.clickable { navController.navigate("register") })
         }
     }
 }
