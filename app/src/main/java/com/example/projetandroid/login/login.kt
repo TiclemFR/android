@@ -100,7 +100,6 @@ fun loginPage(){
                 text = "Aller viens !",
                 color = ClickableText,
                 modifier = Modifier.clickable {  })
-//            ClickableText(text = AnnotatedString("Aller viens !"), onClick = {})
         }
     }
 }
