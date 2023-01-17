@@ -13,7 +13,19 @@ val Inter = FontFamily(Font(R.font.inter_medium));
 val InterCF = FontFamily(Font(R.font.fontspring_demo_integralcf_medium))
 val Typography = Typography(
     body1 = TextStyle(
-        fontFamily = Inter
+        fontFamily = Inter,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
+    h1 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+        fontSize = 30.sp
+    ),
+    h2 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp
     ),
     body2 = TextStyle(
         fontFamily = InterCF
