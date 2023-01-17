@@ -26,3 +26,22 @@ private val LightColorPalette = lightColors(
     onSurface = Color.Black,
     */
 )
+
+@Composable
+fun ProjetAndroidTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colors = if (darkTheme) {
+        DarkColorPalette
+    } else {
+        LightColorPalette
+    }
+
+    MaterialTheme(
+        colors = colors,
+        typography = Typography,
+        shapes = Shapes,
+        content = content
+    )
+}

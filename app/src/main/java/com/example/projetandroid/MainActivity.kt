@@ -159,7 +159,5 @@ fun textButton(){
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    ProjetAndroidTheme {
         subTitle()
-    }
 }
