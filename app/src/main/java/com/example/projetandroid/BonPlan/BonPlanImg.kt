@@ -114,6 +114,3 @@ fun BonPlanImg(navController: NavController){
         }
     }
 }
-fun selectImageInAlbum() {
-
-}
