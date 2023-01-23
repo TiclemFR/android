@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.projetandroid.BonPlan.BonPlan
 import com.example.projetandroid.login.loginPage
+import com.example.projetandroid.onBoarding.OnBoarding
 import com.example.projetandroid.ui.theme.*
 import connectPage
 
@@ -21,12 +22,12 @@ class MainActivity : ComponentActivity() {
             ProjetAndroidTheme {
                 navController = rememberNavController()
                 NavHost(navController = navController as NavHostController,
-                    startDestination = "add"){
+                    startDestination = "onBoarding"){
                     composable("register"){connectPage(navController)}
                     composable("login"){loginPage(navController)}
                     composable("add"){ BonPlan(navController = navController)}
+                    composable("onBoarding"){ OnBoarding(navController = navController) }
                 }
-//                connectPage()
             }
         }
     }
