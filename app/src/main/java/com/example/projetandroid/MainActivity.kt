@@ -12,10 +12,13 @@ import com.example.projetandroid.BonPlan.BonPlan
 import com.example.projetandroid.login.loginPage
 import com.example.projetandroid.onBoarding.OnBoarding
 import com.example.projetandroid.ui.theme.*
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import connectPage
 
 class MainActivity : ComponentActivity() {
     lateinit var navController:NavController
+    val db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
