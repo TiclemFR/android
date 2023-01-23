@@ -30,5 +30,5 @@ val Typography = Typography(
     body2 = TextStyle(
         fontFamily = InterCF,
         fontSize = 16.sp
-    )
+    ),
 )

@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.projetandroid.BonPlan.BonPlan
 import com.example.projetandroid.login.loginPage
 import com.example.projetandroid.ui.theme.*
 import connectPage
@@ -19,9 +20,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             ProjetAndroidTheme {
                 navController = rememberNavController()
-                NavHost(navController = navController as NavHostController, startDestination = "register"){
+                NavHost(navController = navController as NavHostController,
+                    startDestination = "add"){
                     composable("register"){connectPage(navController)}
                     composable("login"){loginPage(navController)}
+                    composable("add"){ BonPlan(navController = navController)}
                 }
 //                connectPage()
             }
