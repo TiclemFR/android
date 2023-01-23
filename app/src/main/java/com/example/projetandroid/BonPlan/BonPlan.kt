@@ -66,10 +66,10 @@ fun BonPlan(navController: NavController){
                 modifier = Modifier.fillMaxHeight()) {
                 HorizontalPager(count = 2,
                     state = pagerState) {page ->
-                    if (page == 0){
-                        BonPlanDesc(pagerState, coroutineScope)
-                    }else if (page == 1){
-                        BonPlanImg(navController)
+
+                    when(page){
+                        0 -> BonPlanDesc(pagerState, coroutineScope)
+                        1 -> BonPlanImg(navController)
                     }
 
                 }
