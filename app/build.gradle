@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -68,3 +67,4 @@ dependencies {
     implementation "com.google.accompanist:accompanist-pager:0.23.1"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.23.1"
 }
+apply plugin: 'com.google.gms.google-services'
