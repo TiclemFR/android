@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -96,7 +97,7 @@ fun OnBoarding(navController: NavController){
         //Button go
         Row(modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 34.dp, start = 31.dp)) {
+            .padding(top = 34.dp), horizontalArrangement = Arrangement.Center) {
             Button(onClick = {
                 navController.navigate("login")
             },
@@ -104,7 +105,7 @@ fun OnBoarding(navController: NavController){
                 shape = RoundedCornerShape(20),
                 modifier = Modifier
                     .width(327.dp)
-                    .height(56.dp)
+                    .height(56.dp),
             )
 
             {

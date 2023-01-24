@@ -18,6 +18,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import com.example.projetandroid.ui.theme.*
+import navbar
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -78,4 +79,5 @@ fun BonPlan(navController: NavController){
         }
 
     }
+    navbar(navController = navController)
 }

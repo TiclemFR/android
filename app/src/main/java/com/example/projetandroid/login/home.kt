@@ -254,6 +254,7 @@ fun home(navController: NavController){
             }
         }
     }
+    navbar(navController = navController)
 }
 
 @Composable
