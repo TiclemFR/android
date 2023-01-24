@@ -15,6 +15,8 @@ import com.example.projetandroid.models.Card
 import com.example.projetandroid.onBoarding.OnBoarding
 import com.example.projetandroid.ui.theme.*
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -25,12 +27,15 @@ import previewCard
 
 class MainActivity : ComponentActivity() {
     lateinit var navController: NavController
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
         val db = Firebase.firestore
+        auth = Firebase.auth
         setContent {
             ProjetAndroidTheme {
+                val currentUser = auth.currentUser
                 navController = rememberNavController()
                 NavHost(navController = navController as NavHostController,
                     startDestination = "onBoarding"){
