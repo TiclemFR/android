@@ -19,17 +19,13 @@ import com.example.projetandroid.ui.theme.*
 
 @Composable
 fun Input(value:String, placeholder: String, onValueChange: (String) -> Unit, password:Boolean = false){
-    val configuration = LocalConfiguration.current
-
-    val screenHeight = configuration.screenHeightDp.dp
-    val screenWidth = configuration.screenWidthDp.dp
     TextField(value = value,
         onValueChange = onValueChange,
         //label = { Text(text = "Login")},
         placeholder = { Text(text = placeholder) },
         modifier = Modifier
             .padding(top = 10.dp)
-            .width(screenWidth - 20.dp),
+            .width(327.dp),
         shape = RoundedCornerShape(20),
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = BackgroundColorInput,

@@ -25,12 +25,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.NavController
 import com.example.projetandroid.R
 import com.example.projetandroid.ui.theme.*
 
 
 @Composable
-fun home(){
+fun home(navController: NavController){
     androidx.compose.material.Surface(
         modifier = Modifier.fillMaxSize(),
         color = HomeBackgroundColor
