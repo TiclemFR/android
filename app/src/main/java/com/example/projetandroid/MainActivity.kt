@@ -27,15 +27,12 @@ import previewCard
 
 class MainActivity : ComponentActivity() {
     lateinit var navController: NavController
-    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
-        val db = Firebase.firestore
-        auth = Firebase.auth
+//        val db = Firebase.firestore
         setContent {
             ProjetAndroidTheme {
-                val currentUser = auth.currentUser
                 navController = rememberNavController()
                 NavHost(navController = navController as NavHostController,
                     startDestination = "onBoarding"){
