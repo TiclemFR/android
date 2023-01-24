@@ -1,5 +1,7 @@
 package com.example.projetandroid.login
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,18 +16,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.projetandroid.ui.theme.Typography
 import com.example.projetandroid.ui.theme.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun loginPage(navController: NavController){
 
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var auth: FirebaseAuth = Firebase.auth
+    val context = LocalContext.current
+
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
@@ -73,7 +82,22 @@ fun loginPage(navController: NavController){
         Row(modifier = Modifier
             .padding(top = 43.dp)) {
             Button(onClick = {
-                navController.navigate("home")
+                auth.signInWithEmailAndPassword(login, password)
+                    .addOnCompleteListener{ task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("sign", "signInWithEmail:success")
+                            val user = auth.currentUser
+//                                updateUI(user)
+                            navController.navigate("home")
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("sing", "signInWithEmail:failure", task.exception)
+                            Toast.makeText(context, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show()
+//                                updateUI(null)
+                        }
+                    }
             },
                 colors = ButtonDefaults.buttonColors(backgroundColor = ButtonColor),
                 shape = RoundedCornerShape(20),
@@ -96,7 +120,9 @@ fun loginPage(navController: NavController){
                 text = "Aller viens !",
                 color = ClickableText,
                 style = Typography.body1,
-                modifier = Modifier.clickable { navController.navigate("register") })
+                modifier = Modifier.clickable {
+                    navController.navigate("register")
+                })
         }
     }
 }

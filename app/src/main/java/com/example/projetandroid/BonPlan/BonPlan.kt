@@ -66,7 +66,8 @@ fun BonPlan(navController: NavController){
             Row(horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxHeight()) {
                 HorizontalPager(count = 2,
-                    state = pagerState) {page ->
+                    state = pagerState,
+                userScrollEnabled = false) {page ->
 
                     when(page){
                         0 -> BonPlanDesc(pagerState, coroutineScope)
