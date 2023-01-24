@@ -18,6 +18,7 @@ import com.google.firebase.ktx.Firebase
 import connectPage
 import home
 import navbar
+import plan
 import previewCard
 
 class MainActivity : ComponentActivity() {
