@@ -3,7 +3,6 @@ package com.example.projetandroid
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -17,9 +16,12 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import connectPage
+import home
+import navbar
+import previewCard
 
 class MainActivity : ComponentActivity() {
-    lateinit var navController:NavController
+    lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
@@ -33,6 +35,7 @@ class MainActivity : ComponentActivity() {
                     composable("login"){loginPage(navController)}
                     composable("add"){ BonPlan(navController = navController)}
                     composable("onBoarding"){ OnBoarding(navController = navController) }
+                    composable("home"){ home(navController = navController) }
                 }
             }
         }
