@@ -37,7 +37,6 @@ fun ProjetAndroidTheme(
     } else {
         LightColorPalette
     }
-
     MaterialTheme(
         colors = colors,
         typography = Typography,
