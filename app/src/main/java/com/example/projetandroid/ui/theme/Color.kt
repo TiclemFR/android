@@ -16,3 +16,5 @@ val PlaceHolderColor = Color(0xffb6b6b6)
 val TinyText = Color(0xff7c7e8c)
 val ClickableText = Color(0xff5f67ea)
 val ButtonColor = Color(0xff5f67ea)
+
+val HomeBackgroundColor = Color(0xFF5F67EA)

@@ -73,7 +73,7 @@ fun loginPage(navController: NavController){
         Row(modifier = Modifier
             .padding(top = 43.dp)) {
             Button(onClick = {
-                navController.navigate("add")
+                navController.navigate("home")
             },
                 colors = ButtonDefaults.buttonColors(backgroundColor = ButtonColor),
                 shape = RoundedCornerShape(20),

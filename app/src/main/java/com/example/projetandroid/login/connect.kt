@@ -78,7 +78,7 @@ fun connectPage(navController: NavController){
                 .padding(top = 531.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            connect()
+            connect(navController)
         }
         Row(
             modifier = Modifier
@@ -125,8 +125,8 @@ fun mention(){
 }
 
 @Composable
-fun connect(){
-    Button(onClick = { /*TODO*/ },
+fun connect(navController: NavController){
+    Button(onClick = { navController.navigate("home") },
         Modifier
             .height(56.dp)
             .width(327.dp), colors = ButtonDefaults.buttonColors(backgroundColor = ButtonBG), shape = RoundedCornerShape(15.dp)
