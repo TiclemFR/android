@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
-//        val db = Firebase.firestore
+        val db = Firebase.firestore
         setContent {
             ProjetAndroidTheme {
                 navController = rememberNavController()

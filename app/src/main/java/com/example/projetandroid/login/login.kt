@@ -82,22 +82,24 @@ fun loginPage(navController: NavController){
         Row(modifier = Modifier
             .padding(top = 43.dp)) {
             Button(onClick = {
-                auth.signInWithEmailAndPassword(login, password)
-                    .addOnCompleteListener{ task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("sign", "signInWithEmail:success")
-                            val user = auth.currentUser
-//                                updateUI(user)
-                            navController.navigate("home")
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("sing", "signInWithEmail:failure", task.exception)
-                            Toast.makeText(context, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
-//                                updateUI(null)
+                if(login != "" && password != ""){
+                    auth.signInWithEmailAndPassword(login, password)
+                        .addOnCompleteListener{ task ->
+                            if (task.isSuccessful) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("sign", "signInWithEmail:success")
+                                val user = auth.currentUser
+    //                                updateUI(user)
+                                navController.navigate("home")
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("sing", "signInWithEmail:failure", task.exception)
+                                Toast.makeText(context, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show()
+    //                                updateUI(null)
+                            }
                         }
-                    }
+                }
             },
                 colors = ButtonDefaults.buttonColors(backgroundColor = ButtonColor),
                 shape = RoundedCornerShape(20),
