@@ -101,7 +101,7 @@ fun BonPlanImg(navController: NavController, card:Card){
         Row(modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(top = 0.dp, start = 31.dp, bottom = 142.dp, end = 31.dp),
+            .padding(top = 0.dp, start = 31.dp, bottom = 110.dp, end = 31.dp),
             verticalAlignment = Alignment.Bottom
         ) {
             Button(onClick = {

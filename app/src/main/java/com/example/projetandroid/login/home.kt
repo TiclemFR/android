@@ -199,7 +199,7 @@ fun home(navController: NavController){
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
                         .fillMaxWidth()
-                        .fillMaxHeight()
+                        .fillMaxHeight().padding(bottom = 80.dp)
                 ){
                     Row(modifier = Modifier
                         .fillMaxWidth()
