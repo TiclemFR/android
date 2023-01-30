@@ -29,6 +29,7 @@ import com.example.projetandroid.ui.theme.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import connectPreviewCard
 import previewCard
 
 @OptIn(ExperimentalPagerApi::class)
@@ -69,11 +70,10 @@ fun OnBoarding(navController: NavController){
                 spacing = 12.dp
             )
         }
-        Row(horizontalArrangement = Arrangement.Center) {
+        Row(modifier = Modifier.padding(top = 28.dp), horizontalArrangement = Arrangement.Center) {
             Column(modifier = Modifier
-                .fillMaxWidth()
-                .height(380.dp)
-                .padding(top = 28.dp, start = 30.dp, end = 30.dp)
+                .width(245.dp)
+                .height(250.dp)
                 .clip(shape = RoundedCornerShape(20.dp))
                 .background(BackgroundColor)
 
@@ -88,60 +88,60 @@ fun OnBoarding(navController: NavController){
                         when (page) {
                             0 -> {
                                 Row() {
-                                    Column() {
-                                        Row {
-                                            previewCard()
+                                    Column(modifier = Modifier.padding(end = 3.dp)) {
+                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                            connectPreviewCard()
                                         }
-                                        Row {
-                                            previewCard()
+                                        Row(modifier = Modifier.padding(top = 3.dp)) {
+                                            connectPreviewCard()
                                         }
                                     }
-                                    Column() {
-                                        Row {
-                                            previewCard()
+                                    Column(modifier = Modifier.padding(start = 3.dp)) {
+                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                            connectPreviewCard()
                                         }
-                                        Row {
-                                            previewCard()
+                                        Row(modifier = Modifier.padding(top = 3.dp)) {
+                                            connectPreviewCard()
                                         }
                                     }
                                 }
                             }
                             1 -> {
                                 Row() {
-                                    Column() {
-                                        Row {
-                                            previewCard()
+                                    Column(modifier = Modifier.padding(end = 3.dp)) {
+                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                            connectPreviewCard()
                                         }
-                                        Row {
-                                            previewCard()
+                                        Row(modifier = Modifier.padding(top = 3.dp)) {
+                                            connectPreviewCard()
                                         }
                                     }
-                                    Column() {
-                                        Row {
-                                            previewCard()
+                                    Column(modifier = Modifier.padding(start = 3.dp)) {
+                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                            connectPreviewCard()
                                         }
-                                        Row {
-                                            previewCard()
+                                        Row(modifier = Modifier.padding(top = 3.dp)) {
+                                            connectPreviewCard()
                                         }
                                     }
                                 }
                             }
                             2 -> {
                                 Row() {
-                                    Column() {
-                                        Row {
-                                            previewCard()
+                                    Column(modifier = Modifier.padding(end = 3.dp)) {
+                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                            connectPreviewCard()
                                         }
-                                        Row {
-                                            previewCard()
+                                        Row(modifier = Modifier.padding(top = 3.dp)) {
+                                            connectPreviewCard()
                                         }
                                     }
-                                    Column() {
-                                        Row {
-                                            previewCard()
+                                    Column(modifier = Modifier.padding(start = 3.dp)) {
+                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                            connectPreviewCard()
                                         }
-                                        Row {
-                                            previewCard()
+                                        Row(modifier = Modifier.padding(top = 3.dp)) {
+                                            connectPreviewCard()
                                         }
                                     }
                                 }
@@ -163,8 +163,8 @@ fun OnBoarding(navController: NavController){
         }
         //Button go
         Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 34.dp), horizontalArrangement = Arrangement.Center) {
+            .fillMaxWidth().fillMaxHeight()
+            .padding(bottom = 47.dp, start = 56.dp, end = 56.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.Bottom) {
             Button(onClick = {
                 val currentUser = auth.currentUser
                 if(currentUser != null){
@@ -177,8 +177,7 @@ fun OnBoarding(navController: NavController){
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFfc77a6)),
                 shape = RoundedCornerShape(20),
                 modifier = Modifier
-                    .width(327.dp)
-                    .height(56.dp),
+                    .fillMaxWidth().height(56.dp),
             )
 
             {
