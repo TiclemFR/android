@@ -36,15 +36,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.projetandroid.R
 import com.example.projetandroid.login.Input
 import com.example.projetandroid.ui.theme.*
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 
 
 @Composable
 fun profile(navController: NavController){
+    val user = Firebase.auth.currentUser
     var pseudo by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -62,7 +67,9 @@ fun profile(navController: NavController){
         modifier = Modifier.fillMaxSize(),
         color = HomeBackgroundColor
     ){
-        Row(modifier = Modifier.fillMaxWidth().padding(top = 58.dp)){
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 58.dp)){
             Column(modifier = Modifier.width(244.dp)) {
                 Row(
                     modifier = Modifier.padding(start = 33.dp),
@@ -78,11 +85,14 @@ fun profile(navController: NavController){
             Column(modifier = Modifier.width(44.dp)) {
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth().height(44.dp).clip(shape = RoundedCornerShape(50.dp)).background(Color.White)
+                        .fillMaxWidth()
+                        .height(44.dp)
+                        .clip(shape = RoundedCornerShape(50.dp))
+                        .background(Color.White)
                         .clickable { launcher.launch("image/*") },
                     verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center
                 ) {
-                    if(picture == null){
+                    if(picture == null && user?.photoUrl == null){
                         Text(text = "+", color = Color(0xFF5F67EA), fontSize = 20.sp)
                     }
                     else{
@@ -105,6 +115,9 @@ fun profile(navController: NavController){
                                     contentScale = ContentScale.Crop
                                 )
                             }
+                        }
+                        user?.photoUrl?.let {
+                            AsyncImage(model = user?.photoUrl, contentDescription = null, modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.Crop)
                         }
                     }
                 }
@@ -161,7 +174,24 @@ fun profile(navController: NavController){
                                 .fillMaxWidth()
                                 .height(56.dp)
                                 .clip(shape = RoundedCornerShape(15.dp))
-                                .background(ButtonColor),
+                                .background(ButtonColor)
+                                .clickable {
+                                    val mImageRef = FirebaseStorage
+                                        .getInstance()
+                                        .getReference("users/" + user?.email + "/pp")
+                                    mImageRef
+                                        .putFile(picture!!)
+                                        .addOnSuccessListener { task ->
+                                            task.storage.downloadUrl.addOnSuccessListener { uri ->
+                                                val profilUpdate = userProfileChangeRequest {
+                                                    photoUri = uri
+                                                    displayName = pseudo
+                                                }
+                                                user!!.updateProfile(profilUpdate)
+                                            }
+                                        }
+
+                                },
                             horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically
                         ){
                             Text(text = "ENREGISTRER", fontFamily = InterCF, fontWeight = FontWeight(400), fontSize = 16.sp, color = Color(0xFFFFFFFF))
