@@ -93,16 +93,23 @@ fun navbar(navController: NavController){
                     modifier = Modifier
                         .width(49.dp)
                         .height(49.dp)
-                        .clickable { }
+                        .clickable { navController.navigate("profil") }
                         .clip(shape = RoundedCornerShape(5.dp))
                         .background(Color(0xFFF2F2F2)),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(painterResource(id = R.drawable.ic_profile), contentDescription = "profile icon", modifier = Modifier
-                        .background(Color.Transparent)
-                        .width(25.dp)
-                        .height(25.dp))
+                    if(navController.currentDestination?.route.toString() == "profil"){
+                        Image(painterResource(id = R.drawable.ic_current_profile), contentDescription = "profil icon", modifier = Modifier
+                            .background(Color.Transparent)
+                            .width(25.dp)
+                            .height(25.dp))
+                    }else{
+                        Image(painterResource(id = R.drawable.ic_profile), contentDescription = "profil icon", modifier = Modifier
+                            .background(Color.Transparent)
+                            .width(25.dp)
+                            .height(25.dp))
+                    }
                 }
             }
         }
