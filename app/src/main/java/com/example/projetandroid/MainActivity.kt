@@ -25,6 +25,7 @@ import home
 import navbar
 import plan
 import previewCard
+import profile
 
 class MainActivity : ComponentActivity() {
     lateinit var navController: NavController
@@ -42,6 +43,7 @@ class MainActivity : ComponentActivity() {
                     composable("add"){ BonPlan(navController = navController)}
                     composable("onBoarding"){ OnBoarding(navController = navController) }
                     composable("home"){ home(navController = navController) }
+                    composable("profil"){ profile(navController = navController) }
                 }
             }
         }
