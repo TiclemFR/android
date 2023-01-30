@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.projetandroid.models.Card
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -25,6 +26,7 @@ import navbar
 fun BonPlan(navController: NavController){
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
+    var card:Card = Card()
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
@@ -70,8 +72,8 @@ fun BonPlan(navController: NavController){
                 userScrollEnabled = false) {page ->
 
                     when(page){
-                        0 -> BonPlanDesc(pagerState, coroutineScope)
-                        1 -> BonPlanImg(navController)
+                        0 -> BonPlanDesc(pagerState, coroutineScope, card)
+                        1 -> BonPlanImg(navController, card)
                     }
 
                 }

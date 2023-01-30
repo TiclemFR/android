@@ -26,6 +26,9 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import com.example.projetandroid.ui.theme.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import connectPreviewCard
 import previewCard
 
@@ -34,6 +37,7 @@ import previewCard
 fun OnBoarding(navController: NavController){
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
+    var auth: FirebaseAuth = Firebase.auth
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
@@ -162,7 +166,13 @@ fun OnBoarding(navController: NavController){
             .fillMaxWidth().fillMaxHeight()
             .padding(bottom = 47.dp, start = 56.dp, end = 56.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.Bottom) {
             Button(onClick = {
-                navController.navigate("login")
+                val currentUser = auth.currentUser
+                if(currentUser != null){
+                    navController.navigate("home")
+                }
+                else{
+                    navController.navigate("login")
+                }
             },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFfc77a6)),
                 shape = RoundedCornerShape(20),

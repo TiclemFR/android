@@ -5,6 +5,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -22,11 +23,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.projetandroid.models.Card
 import com.example.projetandroid.ui.theme.ButtonColor
 import com.example.projetandroid.ui.theme.Typography
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 @Composable
-fun BonPlanImg(navController: NavController){
+fun BonPlanImg(navController: NavController, card:Card){
+    val db = Firebase.firestore
     var picture by remember { mutableStateOf<Uri?>(null) }
     val launcher = rememberLauncherForActivityResult(contract =
     ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -85,7 +90,7 @@ fun BonPlanImg(navController: NavController){
                         Image(
                             bitmap = btm.asImageBitmap(),
                             contentDescription = null,
-                            modifier = Modifier.size(350.dp)
+                            modifier = Modifier.size(260.dp)
                         )
                     }
                 }
@@ -95,11 +100,13 @@ fun BonPlanImg(navController: NavController){
         Row(modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(top = 34.dp, start = 31.dp, bottom = 10.dp),
+            .padding(top = 0.dp, start = 31.dp, bottom = 142.dp, end = 31.dp),
             verticalAlignment = Alignment.Bottom
         ) {
             Button(onClick = {
-                navController.navigate("login")
+                db.collection("cards").add(card).addOnSuccessListener {
+                    navController.navigate("home")
+                }
             },
                 colors = ButtonDefaults.buttonColors(backgroundColor = ButtonColor),
                 shape = RoundedCornerShape(20),

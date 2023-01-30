@@ -13,19 +13,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.projetandroid.login.Input
+import com.example.projetandroid.models.Card
 import com.example.projetandroid.ui.theme.*
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun BonPlanDesc(pagerState: PagerState, coroutineScope: CoroutineScope){
+fun BonPlanDesc(pagerState: PagerState, coroutineScope: CoroutineScope, card:Card){
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var link by remember { mutableStateOf("") }
+    val auth = Firebase.auth
     Column(modifier = Modifier.fillMaxHeight().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
         //Title
         Row(modifier = Modifier
@@ -79,6 +83,9 @@ fun BonPlanDesc(pagerState: PagerState, coroutineScope: CoroutineScope){
             .fillMaxWidth()
             .padding(top = 34.dp), horizontalArrangement = Arrangement.Center) {
             Button(onClick = {
+                card.title = title
+                card.resume = description
+                card.link = link
                 page2(pagerState, coroutineScope)
             },
                 colors = ButtonDefaults.buttonColors(backgroundColor = ButtonColor),
