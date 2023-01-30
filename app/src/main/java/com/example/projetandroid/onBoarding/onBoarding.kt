@@ -108,7 +108,7 @@ fun OnBoarding(navController: NavController){
                     modifier = Modifier
                         .padding(top = 20.dp)
                 ){
-                    HorizontalPager(count = 1,//ceil(tabCard.slice(0..3).size/4.0).toInt(),
+                    HorizontalPager(count = 3,
                         state = pagerState) { page ->
 
                         when (page) {
@@ -143,41 +143,57 @@ fun OnBoarding(navController: NavController){
                                 }
                             }
                             1 -> {
-                                Row() {
-                                    Column(modifier = Modifier.padding(end = 3.dp)) {
-                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
-                                            //connectPreviewCard()
+                                    Row() {
+                                        Column(modifier = Modifier.padding(end = 3.dp)) {
+                                            if(4 in 0..tabCard.lastIndex) {
+                                                Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                                    connectPreviewCard(tabCard[4])
+                                                }
+                                            }
+                                            if(5 in 0..tabCard.lastIndex){
+                                                Row(modifier = Modifier.padding(top = 3.dp)) {
+                                                    connectPreviewCard(tabCard[5])
+                                                }
+                                            }
                                         }
-                                        Row(modifier = Modifier.padding(top = 3.dp)) {
-                                            //connectPreviewCard()
-                                        }
-                                    }
-                                    Column(modifier = Modifier.padding(start = 3.dp)) {
-                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
-                                            //connectPreviewCard()
-                                        }
-                                        Row(modifier = Modifier.padding(top = 3.dp)) {
-                                            //connectPreviewCard()
+                                        Column(modifier = Modifier.padding(start = 3.dp)) {
+                                            if(6 in 0..tabCard.lastIndex) {
+                                                Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                                    connectPreviewCard(tabCard[6])
+                                                }
+                                            }
+                                            if(7 in 0..tabCard.lastIndex){
+                                                Row(modifier = Modifier.padding(top = 3.dp)) {
+                                                    connectPreviewCard(tabCard[7])
+                                                }
+                                            }
                                         }
                                     }
                                 }
-                            }
                             2 -> {
                                 Row() {
                                     Column(modifier = Modifier.padding(end = 3.dp)) {
-                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
-                                            //connectPreviewCard()
+                                        if(8 in 0..tabCard.lastIndex) {
+                                            Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                                connectPreviewCard(tabCard[8])
+                                            }
                                         }
-                                        Row(modifier = Modifier.padding(top = 3.dp)) {
-                                            //connectPreviewCard()
+                                        if(9 in 0..tabCard.lastIndex){
+                                            Row(modifier = Modifier.padding(top = 3.dp)) {
+                                                connectPreviewCard(tabCard[9])
+                                            }
                                         }
                                     }
                                     Column(modifier = Modifier.padding(start = 3.dp)) {
-                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
-                                            //connectPreviewCard()
+                                        if(10 in 0..tabCard.lastIndex) {
+                                            Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                                connectPreviewCard(tabCard[10])
+                                            }
                                         }
-                                        Row(modifier = Modifier.padding(top = 3.dp)) {
-                                            //connectPreviewCard()
+                                        if(11 in 0..tabCard.lastIndex){
+                                            Row(modifier = Modifier.padding(top = 3.dp)) {
+                                                connectPreviewCard(tabCard[11])
+                                            }
                                         }
                                     }
                                 }
