@@ -10,5 +10,5 @@ data class Card(
     var image:String? = "",
     var star:String? = "0",
     var galerien:String? = "0",
-    var user:FirebaseUser? = null
+    var user:String? = ""
 )
