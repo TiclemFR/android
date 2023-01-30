@@ -312,3 +312,59 @@ fun previewCard(){
         }
     }
 }
+
+@Composable
+fun connectPreviewCard(){
+    Box(
+        modifier = Modifier
+            .width(105.dp)
+            .height(105.dp)
+            .clip(shape = RoundedCornerShape(15.dp))
+            .background(color = Color(0xFFFFFFFF))
+            .padding(top = 3.dp)
+            .clickable { },
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Box(
+                modifier = Modifier
+                    .width(94.dp)
+                    .height(58.dp)
+                    .clip(shape = RoundedCornerShape(10.dp))
+                    .background(color = Color(0xFF555555))
+            )
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 47.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Box(
+                modifier = Modifier
+                    .width(23.dp)
+                    .height(23.dp)
+                    .clip(shape = RoundedCornerShape(50.dp))
+                    .background(color = Color(0xFFF00FFF))
+                    .border(2.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(50.dp)))
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 77.dp, start = 9.dp),
+            horizontalAlignment = Alignment.Start
+        ){
+            Text(text = "Abonnement 1 an", fontFamily = Inter, fontWeight = FontWeight(700), fontSize = 9.sp)
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 88.dp, start = 9.dp),
+            horizontalAlignment = Alignment.Start
+        ){
+            Text(text = "2 mois offerts", fontFamily = Inter, fontWeight = FontWeight(500), fontSize = 7.sp)
+        }
+    }
+}
