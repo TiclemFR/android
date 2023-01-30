@@ -1,5 +1,6 @@
 package com.example.projetandroid.onBoarding
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,6 +9,8 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +24,7 @@ import androidx.navigation.NavController
 import com.example.projetandroid.BonPlan.BonPlanDesc
 import com.example.projetandroid.BonPlan.BonPlanImg
 import com.example.projetandroid.BonPlan.page2
+import com.example.projetandroid.models.Card
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -28,9 +32,12 @@ import com.google.accompanist.pager.rememberPagerState
 import com.example.projetandroid.ui.theme.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import connectPreviewCard
 import previewCard
+import kotlin.math.ceil
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -38,6 +45,25 @@ fun OnBoarding(navController: NavController){
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
     var auth: FirebaseAuth = Firebase.auth
+    val db = Firebase.firestore
+    var tabCard = remember{ mutableStateListOf<Card>() }
+    db.collection("cards")
+        .get()
+        .addOnSuccessListener { result ->
+            tabCard.clear()
+            for (document in result) {
+                var card: Card? = document.toObject()
+                if (card != null) {
+                    card.id = document.id
+                    tabCard.add(card)
+                    Log.i("CARD", "Adding card in tab.")
+                    Log.i("CARD", "ID: " + card.id)
+                }
+            }
+        }
+        .addOnFailureListener { exception ->
+            Log.w("CARD", "Error getting documents.", exception)
+        }
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight()
@@ -82,26 +108,36 @@ fun OnBoarding(navController: NavController){
                     modifier = Modifier
                         .padding(top = 20.dp)
                 ){
-                    HorizontalPager(count = 3,
+                    HorizontalPager(count = 1,//ceil(tabCard.slice(0..3).size/4.0).toInt(),
                         state = pagerState) { page ->
 
                         when (page) {
                             0 -> {
-                                Row() {
-                                    Column(modifier = Modifier.padding(end = 3.dp)) {
-                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
-                                            connectPreviewCard()
+                                if(tabCard.size != 0) {
+                                    Row() {
+                                        Column(modifier = Modifier.padding(end = 3.dp)) {
+                                            if(0 in 0..tabCard.lastIndex){
+                                                Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                                    connectPreviewCard(tabCard[0])
+                                                }
+                                            }
+                                            if(1 in 0..tabCard.lastIndex){
+                                                Row(modifier = Modifier.padding(top = 3.dp)) {
+                                                    connectPreviewCard(tabCard[1])
+                                                }
+                                            }
                                         }
-                                        Row(modifier = Modifier.padding(top = 3.dp)) {
-                                            connectPreviewCard()
-                                        }
-                                    }
-                                    Column(modifier = Modifier.padding(start = 3.dp)) {
-                                        Row(modifier = Modifier.padding(bottom = 3.dp)) {
-                                            connectPreviewCard()
-                                        }
-                                        Row(modifier = Modifier.padding(top = 3.dp)) {
-                                            connectPreviewCard()
+                                        Column(modifier = Modifier.padding(start = 3.dp)) {
+                                            if(2 in 0..tabCard.lastIndex){
+                                                Row(modifier = Modifier.padding(bottom = 3.dp)) {
+                                                    connectPreviewCard(tabCard[2])
+                                                }
+                                            }
+                                            if(3 in 0..tabCard.lastIndex){
+                                                Row(modifier = Modifier.padding(top = 3.dp)) {
+                                                    connectPreviewCard(tabCard[3])
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -110,18 +146,18 @@ fun OnBoarding(navController: NavController){
                                 Row() {
                                     Column(modifier = Modifier.padding(end = 3.dp)) {
                                         Row(modifier = Modifier.padding(bottom = 3.dp)) {
-                                            connectPreviewCard()
+                                            //connectPreviewCard()
                                         }
                                         Row(modifier = Modifier.padding(top = 3.dp)) {
-                                            connectPreviewCard()
+                                            //connectPreviewCard()
                                         }
                                     }
                                     Column(modifier = Modifier.padding(start = 3.dp)) {
                                         Row(modifier = Modifier.padding(bottom = 3.dp)) {
-                                            connectPreviewCard()
+                                            //connectPreviewCard()
                                         }
                                         Row(modifier = Modifier.padding(top = 3.dp)) {
-                                            connectPreviewCard()
+                                            //connectPreviewCard()
                                         }
                                     }
                                 }
@@ -130,18 +166,18 @@ fun OnBoarding(navController: NavController){
                                 Row() {
                                     Column(modifier = Modifier.padding(end = 3.dp)) {
                                         Row(modifier = Modifier.padding(bottom = 3.dp)) {
-                                            connectPreviewCard()
+                                            //connectPreviewCard()
                                         }
                                         Row(modifier = Modifier.padding(top = 3.dp)) {
-                                            connectPreviewCard()
+                                            //connectPreviewCard()
                                         }
                                     }
                                     Column(modifier = Modifier.padding(start = 3.dp)) {
                                         Row(modifier = Modifier.padding(bottom = 3.dp)) {
-                                            connectPreviewCard()
+                                            //connectPreviewCard()
                                         }
                                         Row(modifier = Modifier.padding(top = 3.dp)) {
-                                            connectPreviewCard()
+                                            //connectPreviewCard()
                                         }
                                     }
                                 }

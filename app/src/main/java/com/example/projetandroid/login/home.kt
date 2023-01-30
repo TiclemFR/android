@@ -1,4 +1,7 @@
+import android.graphics.BitmapFactory
 import android.inputmethodservice.Keyboard.Row
+import android.util.Log
+import android.widget.ImageView
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -21,17 +24,45 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.net.toUri
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.projetandroid.R
+import com.example.projetandroid.models.Card
 import com.example.projetandroid.ui.theme.*
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
+import java.net.URI
+import java.net.URL
 
 
 @Composable
 fun home(navController: NavController){
+    val db = Firebase.firestore
+    var tabCard = remember{ mutableStateListOf<Card>() }
+    db.collection("cards")
+        .get()
+        .addOnSuccessListener { result ->
+            tabCard.clear()
+            for (document in result) {
+                var card: Card? = document.toObject()
+                if (card != null) {
+                    card.id = document.id
+                    tabCard.add(card)
+                    Log.i("CARD", "Adding card in tab.")
+                    Log.i("CARD", "ID: " + card.id)
+                }
+            }
+        }
+        .addOnFailureListener { exception ->
+            Log.w("CARD", "Error getting documents.", exception)
+        }
     androidx.compose.material.Surface(
         modifier = Modifier.fillMaxSize(),
         color = HomeBackgroundColor
@@ -199,9 +230,32 @@ fun home(navController: NavController){
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
                         .fillMaxWidth()
-                        .fillMaxHeight().padding(bottom = 80.dp)
+                        .fillMaxHeight()
+                        .padding(bottom = 80.dp)
                 ){
-                    Row(modifier = Modifier
+                    if(tabCard.size != 0){
+                        for(i in 0..tabCard.lastIndex step 2){
+                            Row(modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp), horizontalArrangement = Arrangement.Center){
+                                Column(
+                                    modifier = Modifier.padding(end = 4.dp),
+                                    horizontalAlignment = Alignment.Start
+                                ) {
+                                    previewCard(tabCard[i], navController)
+                                }
+                                if(i+1 in 0..tabCard.lastIndex){
+                                    Column(
+                                        modifier = Modifier.padding(start = 4.dp),
+                                        horizontalAlignment = Alignment.End
+                                    ) {
+                                        previewCard(tabCard[i+1], navController)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    /*Row(modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp), horizontalArrangement = Arrangement.Center){
                         Column(
@@ -248,7 +302,7 @@ fun home(navController: NavController){
                         ) {
                             previewCard()
                         }
-                    }
+                    }*/
                 }
 
             }
@@ -258,7 +312,8 @@ fun home(navController: NavController){
 }
 
 @Composable
-fun previewCard(){
+fun previewCard(card:Card, navController: NavController){
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .width(159.dp)
@@ -266,7 +321,7 @@ fun previewCard(){
             .clip(shape = RoundedCornerShape(15.dp))
             .background(color = Color(0xFFFFFFFF))
             .padding(top = 6.dp)
-            .clickable { },
+            .clickable { navController.navigate("plan/" + card.id) },
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -278,7 +333,13 @@ fun previewCard(){
                     .height(90.dp)
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(color = Color(0xFF555555))
-            )
+            ){
+                AsyncImage(
+                    model = card.image,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
         Column(
             modifier = Modifier
@@ -300,7 +361,7 @@ fun previewCard(){
                 .padding(top = 113.dp, start = 14.dp),
             horizontalAlignment = Alignment.Start
         ){
-            Text(text = "Abonnement 1 an", fontFamily = Inter, fontWeight = FontWeight(700), fontSize = 12.sp)
+            Text(text = card.title.toString(), fontFamily = Inter, fontWeight = FontWeight(700), fontSize = 12.sp)
         }
         Column(
             modifier = Modifier
@@ -314,7 +375,7 @@ fun previewCard(){
 }
 
 @Composable
-fun connectPreviewCard(){
+fun connectPreviewCard(card: Card){
     Box(
         modifier = Modifier
             .width(105.dp)
@@ -334,7 +395,9 @@ fun connectPreviewCard(){
                     .height(58.dp)
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(color = Color(0xFF555555))
-            )
+            ){
+                AsyncImage(model = card.image, contentDescription = null)
+            }
         }
         Column(
             modifier = Modifier
