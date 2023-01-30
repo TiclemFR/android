@@ -5,7 +5,6 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -18,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,6 +26,8 @@ import com.example.projetandroid.ui.theme.ButtonColor
 import com.example.projetandroid.ui.theme.Typography
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+
 
 @Composable
 fun BonPlanImg(navController: NavController, card:Card){
@@ -41,6 +41,7 @@ fun BonPlanImg(navController: NavController, card:Card){
     val bitmap =  remember {
         mutableStateOf<Bitmap?>(null)
     }
+
 
     Column() {
         //Title
@@ -104,8 +105,14 @@ fun BonPlanImg(navController: NavController, card:Card){
             verticalAlignment = Alignment.Bottom
         ) {
             Button(onClick = {
-                db.collection("cards").add(card).addOnSuccessListener {
-                    navController.navigate("home")
+                val mImageRef = FirebaseStorage.getInstance().getReference("images/"+ picture.toString().substring(picture.toString().lastIndexOf("/")))
+                mImageRef.putFile(picture!!).addOnSuccessListener {task ->
+                    task.storage.downloadUrl.addOnSuccessListener{uri ->
+                        card.image = uri.toString()
+                        db.collection("cards").add(card).addOnSuccessListener {
+                            navController.navigate("home")
+                        }
+                    }
                 }
             },
                 colors = ButtonDefaults.buttonColors(backgroundColor = ButtonColor),
