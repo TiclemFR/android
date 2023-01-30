@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.*
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -35,9 +36,11 @@ import coil.compose.AsyncImage
 import com.example.projetandroid.R
 import com.example.projetandroid.models.Card
 import com.example.projetandroid.ui.theme.*
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import java.net.URI
 import java.net.URL
 
@@ -67,16 +70,17 @@ fun home(navController: NavController){
         modifier = Modifier.fillMaxSize(),
         color = HomeBackgroundColor
     ){
-        Row(
-            modifier = Modifier.padding(top = 58.dp, start = 33.dp),
-        ) {
-            Text(text = "Coucou toi,", fontFamily = InterCF, fontSize = 26.sp, color = Color(0xFFFFFFFF))
-        }
-        Row(
-            modifier = Modifier.padding(top = 97.dp, start = 33.dp),
-        ) {
-            Text(text = "T'es en manque de thunes ?", fontFamily = Inter, fontSize = 16.sp, color = Color(0xFFFFFFFF))
-        }
+            Row(
+                modifier = Modifier.padding(top = 58.dp, start = 33.dp),
+            ) {
+                Text(text = "Coucou toi,", fontFamily = InterCF, fontSize = 26.sp, color = Color(0xFFFFFFFF))
+            }
+            Row(
+                modifier = Modifier.padding(top = 97.dp, start = 33.dp),
+            ) {
+                Text(text = "T'es en manque de thunes ?", fontFamily = Inter, fontSize = 16.sp, color = Color(0xFFFFFFFF))
+            }
+
         Row(
             modifier = Modifier.padding(top = 164.dp),
             horizontalArrangement = Arrangement.Center
@@ -255,54 +259,6 @@ fun home(navController: NavController){
                             }
                         }
                     }
-                    /*Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp), horizontalArrangement = Arrangement.Center){
-                        Column(
-                            modifier = Modifier.padding(end = 4.dp),
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            previewCard()
-                        }
-                        Column(
-                            modifier = Modifier.padding(start = 4.dp),
-                            horizontalAlignment = Alignment.End
-                        ) {
-                            previewCard()
-                        }
-                    }
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp), horizontalArrangement = Arrangement.Center){
-                        Column(
-                            modifier = Modifier.padding(end = 4.dp),
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            previewCard()
-                        }
-                        Column(
-                            modifier = Modifier.padding(start = 4.dp),
-                            horizontalAlignment = Alignment.End
-                        ) {
-                            previewCard()
-                        }
-                    }
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp), horizontalArrangement = Arrangement.Center){
-                        Column(
-                            modifier = Modifier.padding(end = 4.dp),
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            previewCard()
-                        }
-                        Column(
-                            modifier = Modifier.padding(start = 4.dp),
-                            horizontalAlignment = Alignment.End
-                        ) {
-                            previewCard()
-                        }
-                    }*/
                 }
 
             }
@@ -337,7 +293,7 @@ fun previewCard(card:Card, navController: NavController){
                 AsyncImage(
                     model = card.image,
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.Crop
                 )
             }
         }
@@ -352,8 +308,19 @@ fun previewCard(card:Card, navController: NavController){
                     .width(33.dp)
                     .height(33.dp)
                     .clip(shape = RoundedCornerShape(50.dp))
-                    .background(color = Color(0xFFF00FFF))
                     .border(3.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(50.dp)))
+            {
+                var pp by remember { mutableStateOf("") }
+                val mImageRef = FirebaseStorage.getInstance().getReference()
+                mImageRef.child("users/"+card.user+"/pp").downloadUrl.addOnSuccessListener {uri ->
+                    pp = uri.toString()
+                }
+                AsyncImage(
+                    model = pp,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.Crop
+                )
+            }
         }
         Column(
             modifier = Modifier
@@ -396,7 +363,7 @@ fun connectPreviewCard(card: Card){
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(color = Color(0xFF555555))
             ){
-                AsyncImage(model = card.image, contentDescription = null)
+                AsyncImage(model = card.image, contentDescription = null, modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.Crop)
             }
         }
         Column(
@@ -410,8 +377,19 @@ fun connectPreviewCard(card: Card){
                     .width(23.dp)
                     .height(23.dp)
                     .clip(shape = RoundedCornerShape(50.dp))
-                    .background(color = Color(0xFFF00FFF))
                     .border(2.dp, color = Color(0xFFFFFFFF), shape = RoundedCornerShape(50.dp)))
+            {
+                var pp by remember { mutableStateOf("") }
+                val mImageRef = FirebaseStorage.getInstance().getReference()
+                mImageRef.child("users/"+card.user+"/pp").downloadUrl.addOnSuccessListener {uri ->
+                    pp = uri.toString()
+                }
+                AsyncImage(
+                    model = pp,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.Crop
+                )
+            }
         }
         Column(
             modifier = Modifier

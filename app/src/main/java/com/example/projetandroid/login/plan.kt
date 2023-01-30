@@ -9,21 +9,27 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.projetandroid.R
 import com.example.projetandroid.models.Card
 import com.example.projetandroid.ui.theme.*
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 
 
 @Composable
@@ -46,27 +52,24 @@ fun plan(navController: NavController,id:String) {
                 .height(246.dp)
                 .clip(shape = RoundedCornerShape(bottomEnd = 15.dp, bottomStart = 15.dp))
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .background(
-                        brush = Brush.horizontalGradient(
-                            0.0f to Color(0xD4000000),
-                            1.0f to Color(0x00000000),
-                            startX = 0f,
-                            endX = Float.POSITIVE_INFINITY
-                        )
-                    )
-            ) {
                 Box(
                     modifier = Modifier
                         .fillMaxHeight()
                         .fillMaxWidth()
                 ) {
-                    AsyncImage(model = card.image, contentDescription = null)
+                    AsyncImage(model = card.image, contentDescription = null, modifier = Modifier
+                        .fillMaxWidth().drawWithCache {
+                            val gradient = Brush.horizontalGradient(
+                                colors = listOf(Color(0xD4000000), Color(0x00040809)),
+                                startX = 0f,
+                                endX = size.width * 0.83f
+                            )
+                            onDrawWithContent {
+                                drawContent()
+                                drawRect(gradient, blendMode = BlendMode.Multiply)
+                            }
+                        }, contentScale = ContentScale.Crop)
                 }
-            }
             Column(
                 modifier = Modifier.padding(top = 98.dp),
             ) {
@@ -113,9 +116,17 @@ fun plan(navController: NavController,id:String) {
                             .width(21.dp)
                             .height(21.dp)
                             .clip(shape = RoundedCornerShape(50.dp))
-                            .background(Color.Black)
                     ) {
-
+                        var pp by remember { mutableStateOf("") }
+                        val mImageRef = FirebaseStorage.getInstance().getReference()
+                        mImageRef.child("users/"+card.user+"/pp").downloadUrl.addOnSuccessListener {uri ->
+                            pp = uri.toString()
+                        }
+                        AsyncImage(
+                            model = pp,
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.Crop
+                        )
                     }
                     Column(
                         modifier = Modifier.padding(start = 11.dp),
@@ -132,7 +143,7 @@ fun plan(navController: NavController,id:String) {
                         }
                         Row() {
                             Text(
-                                text = "Killian74",
+                                text = card.user?.substring(0, card.user?.indexOf("@")!!)!!,
                                 fontFamily = Inter,
                                 fontWeight = FontWeight(700),
                                 fontSize = 10.sp,
