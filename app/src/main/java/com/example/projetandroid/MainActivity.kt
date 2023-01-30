@@ -44,6 +44,12 @@ class MainActivity : ComponentActivity() {
                     composable("onBoarding"){ OnBoarding(navController = navController) }
                     composable("home"){ home(navController = navController) }
                     composable("profil"){ profile(navController = navController) }
+                    composable("plan/{id}"){ navBackStackEntry ->
+                        val id = navBackStackEntry.arguments?.getString("id")
+                        id?.let {
+                            plan(navController,it)
+                        }
+                    }
                 }
             }
         }
