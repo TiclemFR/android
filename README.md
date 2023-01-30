@@ -4,6 +4,9 @@
 3. Firebase
 4. Google Analytics
 
+# Outils utilisés
+1. Android Studio
+
 # Lancer le projet
 1. Cloner le repo
 2. Synchroniser Gradle
