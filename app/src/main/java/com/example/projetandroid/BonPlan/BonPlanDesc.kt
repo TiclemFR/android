@@ -86,6 +86,7 @@ fun BonPlanDesc(pagerState: PagerState, coroutineScope: CoroutineScope, card:Car
                 card.title = title
                 card.resume = description
                 card.link = link
+                card.user = auth.currentUser?.email
                 page2(pagerState, coroutineScope)
             },
                 colors = ButtonDefaults.buttonColors(backgroundColor = ButtonColor),
